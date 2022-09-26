@@ -3,14 +3,7 @@
 import collections
 from itertools import combinations
 
-#탐색
-def count(lab,M,N):
-    cnt = 0
-    for i in range(M):
-        for j in range(N):
-            if lab[i][j] == 0:
-                cnt += 1
-    return cnt
+#입력
 
 N, M = map(int,input().split())
 mylab = []
@@ -19,20 +12,25 @@ for i in range(N):
 
 mydict = collections.defaultdict(list)
 
-#0, 2인 좌표 싹 다 탐색
+# 0, 2인 좌표를 리스트에 넣어준다.
+# 0일 때 좌표는 벽 세울 위치를 잡는 조합을 만드는데 사용,
+# 2일 때 좌표는 BFS 실시 시 최초의 큐에 넣어주기 위해.
+
 for i in range(N):
     for j in range(M):
         if mylab[i][j] == 0:
             mydict[0].append([i, j])
-        elif mylab[i][j] == 1:
-            mydict[1].append([i, j])
-        else:
+        elif mylab[i][j] == 2:
             mydict[2].append([i, j])
-# 길이
+
+#길이, 매번 재는것보다 변수 할당하는것이 시간적으로 이득이므로
+#3을 빼주는 이유는 반드시 벽을 3개 세워야 하기 때문이다. (0 자리를 벽이 차지함)
 
 mylen = len(mydict[0])-3
 
-#추가
+# 벽 3개 추가
+# 이후 4방향 탐색하는 BFS 알고리즘, 0이 2로 바뀔 때 안전지대가 1개 사라짐.
+# 따라서 hap -= 1을 해준다.
 
 mycom = list(combinations(mydict[0],3))
 maxhap = 0
