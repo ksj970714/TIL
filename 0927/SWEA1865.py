@@ -1,4 +1,4 @@
-#동철이의 일 분배
+#병합 정렬
 
 def mergesort(mylist):
     N  = len(mylist)
